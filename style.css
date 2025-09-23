@@ -40,6 +40,11 @@ header {
 
 .logo {
 	margin-left: auto;
+	border-radius: 50%;
+}
+
+.logo img {
+	border-radius: 50%;
 }
 
 body {
@@ -50,7 +55,7 @@ main {
 	max-width: 50%;
 	margin: 0 auto;
 }
-@media (max-width: 600px) {
+@media (max-width: 700px) {
 	main {
 		max-width: 80%;
 		margin: 0 auto;
@@ -77,6 +82,7 @@ main {
 .post-logo {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
 }
 
 .post-image {
@@ -123,4 +129,37 @@ footer {
 	border-radius: 20px;
 	border: none;
 	padding: 1em;
+}
+
+form {
+	width: 100%;
+	padding: 1em;
+	margin: 1em;
+	background-color: lightgray;
+	border-radius: 10px;
+}
+
+form textarea {
+    width: 100%;
+    height: 25vh;
+    padding: 1em;
+    resize: vertical;
+}
+
+form input[type="submit"], form input[type="file"] {
+	margin-top: 1em;
+}
+
+form input[type="email"], form input[type="password"] {
+	margin: 0.2em;
+	width: 100%;
+	line-height: 32px;
+}
+
+form a {
+	color: teal;
+}
+
+.form-forgot-password {
+	margin-top: 1em;
 }
