@@ -2,67 +2,125 @@
 	font-family: sans-serif;
 	box-sizing: border-box;
 }
+
 header {
 	position: sticky;
 	top: 0;
-    display: flex;
-    align-items: center;
-    background-color: gray;
-    border-radius: 20px;
-    border: none;
-    padding: .5em 1em;
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	background-color: gray;
+	border-radius: 20px;
+	border: none;
+	padding: 1em;
 }
+
 .nav {
-    display: flex;
-    flex-direction: row;
-    gap: 1em;
+	display: flex;
+	flex-direction: row;
+	gap: 1em;
 }
+
 .nav-link {
 	text-decoration: none;
-    padding: 10px 15px;
-    text-align: left;
-    color: black;
+	padding: 10px 15px;
+	text-align: left;
+	color: black;
 }
+
+.nav-link ~ .nav-link {
+	margin-left: 1em;
+}
+
 .nav-link:hover {
 	background-color: lightgray;
 	color: black;
 	border-radius: 20px;
 }
+
 .logo {
-    margin-left: auto;
+	margin-left: auto;
 }
-div {
-	padding-top: .5em;
-    padding-bottom: .5em;
-    border-radius: 20px;
-	border-style: none;
-	text-align: center;
-}
+
 body {
 	text-align: center;
 }
+
 main {
-	max-width: 800px;
+	max-width: 50%;
 	margin: 0 auto;
 }
+@media (max-width: 600px) {
+	main {
+		max-width: 80%;
+		margin: 0 auto;
+	}
+}
+
 #posts {
 	display: flex;
 	flex-direction: column;
 	gap: 1em;
+	padding: 1em;
 }
+
 .post {
+	display: flex;
+	flex-direction: column;
+	background-color: lightgray;
+	border-style: none;
 	border-radius: 20px;
 	padding: 1em;
 	text-align: left;
-	background-color: lightgray;
 }
+
+.post-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.post-image {
+  max-width: 90%;
+  padding: .1em;
+}
+
+.post-date {
+  font-size: 1em;
+  color: black;
+}
+
+.post-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .1em;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#posts > .post > p {
+	color: black;
+}
+
+#posts > .post > img {
+	height: 200px;
+	width: 200px;
+}
+
+.post + .post {
+	margin-top: 1em;
+}
+
 footer {
-	position: sticky;
-	bottom: 0;
-    display: flex;
-    align-items: center;
-    background-color: gray;
-    border-radius: 20px;
-    border: none;
-    padding: .5em 1em;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	background-color: gray;
+	border-radius: 20px;
+	border: none;
+	padding: 1em;
 }
