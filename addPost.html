@@ -12,13 +12,14 @@
 		<nav class="nav">
 			<a class="nav-link" href="index.html"><strong>Home</strong></a>
 		</nav>
-		<img class="logo" src="me.png" width="50" height="50" alt="logo">
+		<a href="login.html" class="logo"><img src="img/me.png" width="50" height="50" alt="logo"></a>
 	</header>
 
     <main>
         <form action="index.html">
             <textarea name="" id="fpostbody" required placeholder="What do you want to write about?"></textarea> <br>
-            <input type="file" name="fselectedfile" id="fselectedfile" accept=".png .jpg .jpeg"> <br>
+            <label for="fselectedfile" class="file-link">Attach an image</label>
+            <input type="file" name="fselectedfile" id="fselectedfile" accept="image/png, image/jpeg" class="file-input"><br>
             <input type="submit" value="Create post" id="fsubmit">
         </form>
     </main>
