@@ -146,7 +146,7 @@ form input[type="submit"], form input[type="file"] {
 }
 
 form input[type="email"], form input[type="password"] {
-	margin: 0.2em;
+	margin: 0.2em 0;
 	width: 100%;
 	line-height: 32px;
 }
