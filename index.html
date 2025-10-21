@@ -3,7 +3,9 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="stylesheet" href="style.css">
+	<!-- Disable favicon 404 -->
+	<link rel="icon" href="data:image/png;base64,iVBORw0KGgo=">
+	<link rel="stylesheet" href="src/style.css">
 	<title>PostIt — Home</title>
 </head>
 <body>
@@ -12,64 +14,17 @@
 			<a class="nav-link" href="index.html"><strong>Home</strong></a>
 			<a class="nav-link" href="addPost.html"><strong>Add Post</strong></a>
 		</nav>
-		<a href="login.html" class="logo"><img src="img/me.png" width="50" height="50" alt="logo"></a>
+		<a href="login.html" class="logo"><img src="src/img/me.png" width="50" height="50" alt="logo"></a>
 	</header>
 
 	<main>
 		<div id="posts">
-			<div class="post">
-				<div class="post-header">
-					<img class="post-logo" src="img/me.png" alt="avatar">
-					<span class="post-date">23/09/2025</span>
-				</div>
-				<div class="post-content">
-					<img class="post-image" src="img/pilt1.jpg" alt="post image">
-					<p>This is the content of the first post.</p>
-				</div>
-			</div>
-			<div class="post">
-				<div class="post-header">
-					<img class="post-logo" src="img/me.png" alt="avatar">
-					<span class="post-date">23/09/2025</span>
-				</div>
-				<div class="post-content">
-					<img class="post-image" src="img/pilt2.jpg" alt="post image">
-					<p>This is the content of the second post.</p>
-				</div>
-			</div>
-			<div class="post">
-				<div class="post-header">
-					<img class="post-logo" src="img/me.png" alt="avatar">
-					<span class="post-date">23/09/2025</span>
-				</div>
-				<div class="post-content">
-					<img class="post-image" src="img/pilt3.jpg" alt="post image">
-					<p>post 3.</p>
-				</div>
-			</div>
-			<div class="post">
-				<div class="post-header">
-					<img class="post-logo" src="img/me.png" alt="avatar">
-					<span class="post-date">23/09/2025</span>
-				</div>
-				<div class="post-content">
-					<p>post 4. This post has only text.</p>
-				</div>
-			</div>
-			<div class="post">
-				<div class="post-header">
-					<img class="post-logo" src="img/me.png" alt="avatar">
-					<span class="post-date">23/09/2025</span>
-				</div>
-				<div class="post-content">
-					<p>post 5. No picture here either.</p>
-				</div>
-			</div>
 		</div>
 	</main>
 
 	<footer>
 		<p>Footer</p>
 	</footer>
+	<script src="src/posts.js"></script>
 </body>
 </html>
