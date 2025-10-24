@@ -169,3 +169,22 @@ form a {
 	text-decoration: underline;
 	cursor: pointer;
 }
+
+.logo-menu summary {
+	list-style: none;
+}
+
+.logo-dropdown {
+	position: absolute;
+	min-width: 160px;
+	background: lightgray;
+	border-radius: 10px;
+}
+
+.logo-dropdown a {
+	display: block;
+	padding: 10px;
+	color: black;
+}
+
+.logo-menu:not([open]) .logo-dropdown { display: none; }
