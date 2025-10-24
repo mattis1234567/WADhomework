@@ -170,11 +170,17 @@ form a {
 	cursor: pointer;
 }
 
+.logo-menu {
+	margin-left: auto;
+}
+
 .logo-menu summary {
 	list-style: none;
 }
 
 .logo-dropdown {
+	right: 0;
+	left: auto;
 	position: absolute;
 	min-width: 160px;
 	background: lightgray;
