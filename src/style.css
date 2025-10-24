@@ -103,14 +103,13 @@ main {
   align-items: center;
 }
 
-#posts > .post > p {
+.post .post-content p  {
 	color: black;
 }
 
-#posts > .post > img {
-	height: 200px;
-	width: 200px;
-}
+.post .post-content img {
+	width: 200px; height: 200px;
+	}
 
 .post + .post {
 	margin-top: 1em;
