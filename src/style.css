@@ -80,11 +80,6 @@ main {
   border-radius: 50%;
 }
 
-.post-image {
-  max-width: 90%;
-  padding: .1em;
-}
-
 .post-date {
   font-size: 1em;
   color: black;
@@ -107,11 +102,12 @@ main {
 	color: black;
 }
 
+.post-image,
 .post .post-content img {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  height: auto;
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	height: auto;
 }
 
 .post + .post {
