@@ -104,7 +104,8 @@ main {
 
 .post-image,
 .post .post-content img {
-	padding: 1 em;
+	padding: 0.5em;
+	margin: 0.5em;
 	display: block;
 	width: 90%;
 	max-width: 90%;
