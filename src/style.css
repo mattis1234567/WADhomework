@@ -108,8 +108,11 @@ main {
 }
 
 .post .post-content img {
-	width: 200px; height: 200px;
-	}
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
 
 .post + .post {
 	margin-top: 1em;
