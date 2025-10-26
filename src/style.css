@@ -1,6 +1,14 @@
-*{
+* {
 	font-family: sans-serif;
 	box-sizing: border-box;
+}
+
+:root {
+	--primary-color: #a5faa8;
+	--primary-color-darkened: #94e896;
+	--primary-color-hover: #64fa69;
+	--background-color: #d4fed5;
+	--uniform-shadow: 0 0px 10px 1px rgba(0,0,0,0.3);
 }
 
 header {
@@ -9,10 +17,11 @@ header {
 	z-index: 1000;
 	display: flex;
 	align-items: center;
-	background-color: gray;
+	background-color: var(--primary-color);
 	border-radius: 20px;
 	border: none;
 	padding: 1em;
+	box-shadow: var(--uniform-shadow);
 }
 
 .nav {
@@ -26,6 +35,8 @@ header {
 	padding: 10px 15px;
 	text-align: left;
 	color: black;
+	border-radius: 20px;
+	transition: background-color 0.2s linear;
 }
 
 .nav-link ~ .nav-link {
@@ -33,9 +44,7 @@ header {
 }
 
 .nav-link:hover {
-	background-color: lightgray;
-	color: black;
-	border-radius: 20px;
+	background-color: var(--primary-color-hover);
 }
 
 .logo {
@@ -49,11 +58,13 @@ header {
 
 body {
 	text-align: center;
-	margin: 0;
+	background-color: #eeeded;
+	max-width: min(100%, clamp(600px, 60vw, 1200px));
+	margin: 0 auto;
+	padding: 1em;
 }
 
 main {
-	max-width: min(100%, clamp(600px, 60vw, 1200px));
 	margin: 0 auto;
 	padding: 1em;
 }
@@ -67,7 +78,7 @@ main {
 .post {
 	display: flex;
 	flex-direction: column;
-	background-color: lightgray;
+	background-color: var(--background-color);
 	border-style: none;
 	border-radius: 20px;
 	padding: 1em;
@@ -110,6 +121,7 @@ main {
 	width: 90%;
 	max-width: 90%;
 	height: auto;
+	border-radius: clamp(8px, 4vw, 20px);
 }
 
 .post + .post {
@@ -117,20 +129,21 @@ main {
 }
 
 footer {
-	text-align: center;
 	display: flex;
+	justify-content: center;
 	align-items: center;
-	background-color: gray;
+	background-color: var(--primary-color);
 	border-radius: 20px;
 	border: none;
 	padding: 1em;
+	box-shadow: var(--uniform-shadow);
 }
 
 form {
 	width: 100%;
 	padding: 1em;
 	margin: 1em 0;
-	background-color: lightgray;
+	background-color: var(--background-color);
 	border-radius: 10px;
 }
 
@@ -149,6 +162,21 @@ form input[type="email"], form input[type="password"] {
 	margin: 0.2em 0;
 	width: 100%;
 	line-height: 32px;
+}
+
+form input[type="submit"] {
+	margin-top: 0.5em;
+    background-color: var(--primary-color);
+	width: 100%;
+	padding: 0.75em;
+	font-size: 1rem;
+	border: none;
+	border-radius: 8px;
+	transition: background-color 0.2s linear;
+}
+
+form input[type="submit"]:hover {
+	background-color: var(--primary-color-hover);
 }
 
 form a {
@@ -175,6 +203,10 @@ form a {
 	margin-left: auto;
 }
 
+.logo-menu img {
+	border-radius: 50%;
+}
+
 .logo-menu summary {
 	list-style: none;
 }
@@ -184,7 +216,7 @@ form a {
 	left: auto;
 	position: absolute;
 	min-width: 160px;
-	background: lightgray;
+	background: var(--primary-color-darkened);
 	border-radius: 10px;
 }
 
