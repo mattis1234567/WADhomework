@@ -213,11 +213,15 @@ form a {
 .dropdown-content {
 	right: 0;
 	left: auto;
-	display: none;
+	display: block;
 	position: absolute;
 	z-index: 1;
 	background: var(--primary-color-darkened);
 	border-radius: 10px;
+	visibility: hidden;
+  transform: translateY(5px);
+  pointer-events: none;
+  transition: 0.3s;
 }
 
 .dropdown-content a {
@@ -225,9 +229,15 @@ form a {
 	padding: 10px;
 	color: black;
 	border-radius: 10px;
+	transition: 0.3s;
 }
 
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: 0.3s;
+}
 .dropdown-content a:hover {
 	background-color: var(--primary-color-hover);
 }
