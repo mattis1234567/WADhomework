@@ -8,22 +8,21 @@
 	<link rel="stylesheet" href="src/style.css">
 	<title>PostIt — Home</title>
 </head>
+
 <body>
 	<header>
 		<nav class="nav">
 			<a class="nav-link" href="index.html"><strong>Home</strong></a>
 			<a class="nav-link" href="addPost.html"><strong>Add Post</strong></a>
 		</nav>
-		<details class="logo-menu">
-		  <summary>
+		<div class="dropdown">
 			<img src="src/img/me.png" width="50" height="50" alt="Open menu">
-		  </summary>
-		  <nav class="logo-dropdown">
-			<a>John Doe</a>
-			<a>john.doe@ut.ee</a>
-			<a href="login.html">Logout</a>
-		  </nav>
-		</details>
+			<div class="dropdown-content">
+				<a>John Doe</a>
+				<a>john.doe@ut.ee</a>
+				<a href="login.html">Logout</a>
+			</div>
+		</div>
 	</header>
 
 	<main>

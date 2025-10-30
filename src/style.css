@@ -199,31 +199,35 @@ form a {
 	cursor: pointer;
 }
 
-.logo-menu {
+.dropdown {
 	margin-left: auto;
+	margin-right: 0
 }
 
-.logo-menu img {
+.dropdown img {
 	border-radius: 50%;
+	margin-left: auto;
+	margin-right: 0
 }
 
-.logo-menu summary {
-	list-style: none;
-}
-
-.logo-dropdown {
+.dropdown-content {
 	right: 0;
 	left: auto;
+	display: none;
 	position: absolute;
-	min-width: 160px;
+	z-index: 1;
 	background: var(--primary-color-darkened);
 	border-radius: 10px;
 }
 
-.logo-dropdown a {
+.dropdown-content a {
 	display: block;
 	padding: 10px;
 	color: black;
+	border-radius: 10px;
 }
 
-.logo-menu:not([open]) .logo-dropdown { display: none; }
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown-content a:hover {
+	background-color: var(--primary-color-hover);
+}
