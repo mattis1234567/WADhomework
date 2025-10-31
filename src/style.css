@@ -219,9 +219,9 @@ form a {
 	background: var(--primary-color-darkened);
 	border-radius: 10px;
 	visibility: hidden;
-  transform: translateY(5px);
-  pointer-events: none;
-  transition: 0.3s;
+	transform: translateY(5px);
+	pointer-events: none;
+	transition: 0.3s;
 }
 
 .dropdown-content a {
@@ -232,12 +232,12 @@ form a {
 	transition: 0.3s;
 }
 
-.dropdown:hover .dropdown-content {
-  visibility: visible;
-  transform: translateY(0);
-  pointer-events: auto;
-  transition: 0.3s;
+.dropdown.open .dropdown-content {
+	visibility: visible;
+	transform: translateY(0);
+	pointer-events: auto;
 }
+
 .dropdown-content a:hover {
 	background-color: var(--primary-color-hover);
 }
