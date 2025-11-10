@@ -4,7 +4,7 @@
     <div id="posts" >
       <Post v-for="post in posts" :key="post.postID" :post_id="post.postID" :post_datetime="post.creationTime" :post_body="post.body" :post_image_url="post.imageUrl" ></Post>
     </div>
-    <div class="button-section-debug">
+    <div>
       <button @click="resetLikesBtn">Reset likes</button>
       <button @click="randomizeLikesBtn">Randomize Likes</button>
     </div>
