@@ -8,6 +8,10 @@
             <img v-if="post_image_url" :src="post_image_url" alt="Post image" class="post-image">
             <p>{{ post_body }}</p>
         </div>
+        <div class="social-media">
+          <img class="like-button" src="@/assets/icon-like.png" alt="Like btn" @click="likeButtonClick">
+          <p>{{ likes }} Likes</p>
+        </div>
     </div>
 </template>
 <script>
@@ -16,7 +20,18 @@ export default {
     props: {
         post_datetime: {type: String, required: true},
         post_body: {type: String, required: true},
-        post_image_url: {type: String, required: false}
+        post_image_url: {type: String, required: false},
+        post_id: {type: Number, required: true}
+    },
+    methods: {
+      likeButtonClick() {
+        this.$store.dispatch('IncreaseLikesAct', this.post_id);
+      }
+    },
+    computed: {
+      likes() {
+        return this.$store.getters.getLikes(this.post_id);
+      }
     }
 }
 </script>
@@ -70,8 +85,15 @@ export default {
 	border-radius: clamp(8px, 4vw, 20px);
 }
 
-/*
-.post + .post {
-	margin-top: 1em;
-}*/
+.like-button {
+  width: 40px;
+  height: 40px;
+}
+
+.social-media {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 0.5em 0 0.5em;
+}
 </style>
