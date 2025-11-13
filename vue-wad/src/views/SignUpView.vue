@@ -1,17 +1,17 @@
 <template>
     <Header></Header>
     <main>
-        <form @submit.prevent="goHome">
+        <form @submit.prevent="checkPasswordgoHome">
             <div class="form-title">
                 <h1>Welcome to PostIt</h1>
-                <router-link to="/signup">Create an account</router-link>
-                <p>or<br>Please log in</p>
+                <router-link to="/">Log in</router-link>
+                <p>or<br>Please sign up</p>
             </div>
             <input type="email" name="email" id="femail" placeholder="Email" required> <br>
-            <input type="password" id="fpass" placeholder="Password" required minlength="8"> <br>
-            <input type="submit" value="Log in"> <br>
+            <input type="password" id="fpass" placeholder="Password"> <br>
+            <input type="submit" value="Sign up"> <br>
             <div class="form-forgot-password">
-                <router-link to="/">Forget password</router-link>
+                <router-link to="/">Help with log in</router-link>
             </div>
         </form>
     </main>
@@ -28,8 +28,48 @@ export default {
         Footer
     },
     methods: {
-        goHome() {
-        this.$router.push('/');
+        checkPasswordgoHome() {
+            const password = document.getElementById('fpass').value;
+
+            if (!this.isValidPassword(password)) {
+                return;
+            }
+            this.$router.push('/');
+        },
+        isValidPassword(password) {
+            const errors = [];
+
+            if (password.length < 8 || password.length > 14) {
+                errors.push('- Password must be 8–14 characters long.');
+            }
+
+            if (!/^[A-Z]/.test(password)) {
+                errors.push('- Password must start with an uppercase letter.');
+            }
+
+            if (!/[A-Z]/.test(password)) {
+                errors.push('- Password must include at least one uppercase letter.');
+            }
+
+            const lowercaseMatches = password.match(/[a-z]/g) || [];
+            if (lowercaseMatches.length < 2) {
+                errors.push('- Password must include at least two lowercase letters.');
+            }
+
+            if (!/[0-9]/.test(password)) {
+                errors.push('- Password must include at least one number.');
+            }
+
+            if (!password.includes('_')) {
+                errors.push('- Password must include the character "_".');
+            }
+
+            if (errors.length > 0) {
+                alert('Password is not valid:\n\n' + errors.join('\n'));
+                return false;
+            }
+
+            return true;
         }
     }
 };
