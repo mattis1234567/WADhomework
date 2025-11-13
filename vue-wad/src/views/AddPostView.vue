@@ -1,7 +1,7 @@
 <template>
     <Header></Header>
     <main>
-        <form action="index.html">
+        <form @submit.prevent="goHome">
             <textarea name="" id="fpostbody" required placeholder="What do you want to write about?"></textarea> <br>
             <label for="fselectedfile" class="file-link">Attach an image</label>
             <input type="file" name="fselectedfile" id="fselectedfile" accept="image/png, image/jpeg" class="file-input"><br>
@@ -19,26 +19,15 @@ export default {
     components: {
         Header,
         Footer
-    }
+    },
+	methods: {
+		goHome() {
+		this.$router.push('/');
+		}
+	}
 }
 </script>
-<style>
-* {
-	font-family: sans-serif;
-	box-sizing: border-box;
-}
-body {
-	text-align: center;
-	background-color: #eeeded;
-	max-width: min(100%, clamp(600px, 60vw, 1200px));
-	margin: 0 auto;
-	padding: 1em;
-}
-
-main {
-	margin: 0 auto;
-	padding: 1em;
-}
+<style scoped>
 form {
 	width: 100%;
 	padding: 1em;

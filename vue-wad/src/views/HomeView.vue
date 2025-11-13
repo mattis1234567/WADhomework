@@ -50,20 +50,7 @@ export default {
   }
 }
 </script>
-<style>
-body {
-	text-align: center;
-	background-color: #eeeded;
-	max-width: min(100%, clamp(600px, 60vw, 1200px));
-	margin: 0 auto;
-	padding: 1em;
-}
-
-main {
-	margin: 0 auto;
-	padding: 1em;
-}
-
+<style scoped>
 #posts {
 	display: flex;
 	flex-direction: column;

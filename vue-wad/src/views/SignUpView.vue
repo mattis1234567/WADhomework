@@ -1,17 +1,17 @@
 <template>
     <Header></Header>
     <main>
-        <form action="index.html">
+        <form @submit.prevent="goHome">
             <div class="form-title">
                 <h1>Welcome to PostIt</h1>
-                <a href="">Create an account</a>
+                <router-link to="/signup">Create an account</router-link>
                 <p>or<br>Please log in</p>
             </div>
             <input type="email" name="email" id="femail" placeholder="Email" required> <br>
-            <input type="password" name="password" id="fpass" placeholder="Password" required> <br>
+            <input type="password" id="fpass" placeholder="Password" required minlength="8"> <br>
             <input type="submit" value="Log in"> <br>
             <div class="form-forgot-password">
-                <a href="">Forget password</a>
+                <router-link to="/">Forget password</router-link>
             </div>
         </form>
     </main>
@@ -26,26 +26,30 @@ export default {
     components: {
         Header,
         Footer
+    },
+    methods: {
+        goHome() {
+        this.$router.push('/');
+        }
     }
-}
+};
 </script>
-<style>
-* {
-	font-family: sans-serif;
-	box-sizing: border-box;
-}
-body {
-	text-align: center;
-	background-color: #eeeded;
-	max-width: min(100%, clamp(600px, 60vw, 1200px));
-	margin: 0 auto;
+<style scoped>
+form {
+	width: 100%;
 	padding: 1em;
+	margin: 1em 0;
+	background-color: var(--background-color);
+	border-radius: 10px;
 }
 
-main {
-	margin: 0 auto;
-	padding: 1em;
+form textarea {
+    width: 100%;
+    height: 25vh;
+    padding: 1em;
+    resize: none;
 }
+
 form input[type="submit"], form input[type="file"] {
 	margin-top: 0em;
 }
