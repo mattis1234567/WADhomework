@@ -54,4 +54,19 @@ form textarea {
 	text-decoration: underline;
 	cursor: pointer;
 }
+
+form input[type="submit"] {
+	margin-top: 0.5em;
+    background-color: var(--primary-color);
+	width: 100%;
+	padding: 0.75em;
+	font-size: 1rem;
+	border: none;
+	border-radius: 8px;
+	transition: background-color 0.2s linear;
+}
+
+form input[type="submit"]:hover {
+	background-color: var(--primary-color-hover);
+}
 </style>
