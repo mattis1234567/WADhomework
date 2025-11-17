@@ -8,6 +8,9 @@
                 <p>or<br>Please sign up</p>
             </div>
             <input type="email" name="email" id="femail" placeholder="Email" required> <br>
+            <div class="popup" id="myPopup" @click="hidePopup">
+                <span class="popuptext" style="white-space: pre-line">popup text</span>
+            </div>
             <input type="password" id="fpass" placeholder="Password"> <br>
             <input type="submit" value="Sign up"> <br>
             <div class="form-forgot-password">
@@ -29,14 +32,27 @@ export default {
     },
     methods: {
         checkPasswordgoHome() {
-            const password = document.getElementById('fpass').value;
+        const password = document.getElementById('fpass').value;
+        const errors = this.PasswordProblems(password);
 
-            if (!this.isValidPassword(password)) {
-                return;
+        if (errors.length > 0) {
+            const popup = document.getElementById("myPopup");
+            const popupText = popup.querySelector('.popuptext');
+
+            popupText.textContent = 'Password is not valid:\n\n' + errors.join('\n');
+            popup.classList.add("show");
+            return;
+        }
+        this.hidePopup();
+        this.$router.push('/');
+    },
+        hidePopup() {
+            const popup = document.getElementById("myPopup");
+            if (popup) {
+                popup.classList.remove("show");
             }
-            this.$router.push('/');
         },
-        isValidPassword(password) {
+        PasswordProblems(password) {
             const errors = [];
 
             if (password.length < 8 || password.length > 14) {
@@ -64,12 +80,7 @@ export default {
                 errors.push('- Password must include the character "_".');
             }
 
-            if (errors.length > 0) {
-                alert('Password is not valid:\n\n' + errors.join('\n'));
-                return false;
-            }
-
-            return true;
+            return errors;
         }
     }
 };
@@ -121,5 +132,40 @@ form a {
 
 .form-forgot-password {
 	margin-top: 1em;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.4);
+  visibility: hidden;
+  z-index: 1000;
+}
+
+.popup .popuptext {
+  width: 320px;
+  background-color: var(--primary-color-hover);
+  border-radius: 6px;
+  padding: 1em;
+  text-align: left;
+}
+
+.popup.show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} to {opacity: 1;}
+} @keyframes fadeIn {
+    from {opacity: 0;} to {opacity: 1;}
 }
 </style>
