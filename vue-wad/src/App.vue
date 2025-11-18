@@ -1,7 +1,19 @@
 <template>
   <router-view/>
 </template>
+<script>
+import postsData from '@/assets/posts.json';
 
+export default {
+	mounted() {
+		let posts = postsData.map(post => ({
+			...post,
+			imageUrl: post.imageUrl ? (post.imageUrl.startsWith("./") ? require(`@/assets/${post.imageUrl.substring(2)}`) : post.imageUrl) : null
+		}));
+		this.$store.dispatch('SetPostsAct', posts);
+	}
+}
+</script>
 <style>
 :root {
   font-family: Helvetica, Arial, sans-serif;

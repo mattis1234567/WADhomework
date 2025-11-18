@@ -16,7 +16,6 @@
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import Post from '@/components/Post.vue';
-import postsData from '@/assets/posts.json';
 
 export default {
   name: 'HomeView',
@@ -24,16 +23,6 @@ export default {
     Header,
     Footer,
     Post
-  },
-  mounted() {
-    let posts = postsData.map(post => ({
-        ...post,
-        imageUrl: post.imageUrl ? (post.imageUrl.startsWith("./") ? require(`@/assets/${post.imageUrl.substring(2)}`) : post.imageUrl) : null
-      }));
-    this.$store.dispatch('SetPostsAct', posts);
-  },
-  data: function() {
-    return {};
   },
   computed: {
     posts() {
@@ -63,7 +52,7 @@ button {
   background-color: var(--primary-color);
   border: none;
   padding: 1em;
-  border-radius: 15%;
+  border-radius: 8px;
   font-size: 22px;
 	box-shadow: var(--uniform-shadow);
 }

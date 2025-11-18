@@ -32,20 +32,20 @@ export default {
     },
     methods: {
         checkPasswordgoHome() {
-        const password = document.getElementById('fpass').value;
-        const errors = this.PasswordProblems(password);
+            const password = document.getElementById('fpass').value;
+            const errors = this.PasswordProblems(password);
 
-        if (errors.length > 0) {
-            const popup = document.getElementById("myPopup");
-            const popupText = popup.querySelector('.popuptext');
+            if (errors.length > 0) {
+                const popup = document.getElementById("myPopup");
+                const popupText = popup.querySelector('.popuptext');
 
-            popupText.textContent = 'Password is not valid:\n\n' + errors.join('\n');
-            popup.classList.add("show");
-            return;
-        }
-        this.hidePopup();
-        this.$router.push('/');
-    },
+                popupText.textContent = 'Password is not valid:\n\n' + errors.join('\n');
+                popup.classList.add("show");
+                return;
+            }
+            this.hidePopup();
+            this.$router.push('/');
+        },
         hidePopup() {
             const popup = document.getElementById("myPopup");
             if (popup) {
@@ -163,9 +163,11 @@ form a {
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
 }
+
 @-webkit-keyframes fadeIn {
     from {opacity: 0;} to {opacity: 1;}
-} @keyframes fadeIn {
+} 
+@keyframes fadeIn {
     from {opacity: 0;} to {opacity: 1;}
 }
 </style>
