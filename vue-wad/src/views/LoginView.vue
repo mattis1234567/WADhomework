@@ -4,8 +4,8 @@
         <form @submit.prevent="checkPasswordgoHome">
             <div class="form-title">
                 <h1>Welcome to PostIt</h1>
-                <router-link to="/login">Log in</router-link>
-                <p>or<br>Please sign up</p>
+                <router-link to="/signup">Sign up</router-link>
+                <p>or<br>Please Log in</p>
             </div>
             <input type="email" name="email" id="femail" placeholder="Email" required> <br>
             <div class="popup" id="myPopup" @click="hidePopup">
@@ -25,7 +25,7 @@ import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 
 export default {
-    name: 'SignUpView',
+    name: 'LoginView',
     components: {
         Header,
         Footer

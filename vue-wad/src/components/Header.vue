@@ -3,9 +3,10 @@
 		<nav class="nav">
             <router-link class="nav-link" to="/"><strong>Home</strong></router-link>
             <router-link class="nav-link" to="/addpost"><strong>Add Post</strong></router-link>
+			<router-link class="nav-link" to="/ContactUs"><strong>Contact Us</strong></router-link>
 		</nav>
 		<div class="dropdown" :class="{open: isOpen}">
-			<img src="@/assets/me.png" width="50" height="50" alt="Open menu" @click="toggleDropdown">
+			<img src="@/assets/me.png" width="55px" height="55px" alt="Open menu" @click="toggleDropdown">
 			<div class="dropdown-content" v-if="isOpen">
 				<a role="menuitem">John Doe</a>
 				<a role="menuitem">john.doe@ut.ee</a>

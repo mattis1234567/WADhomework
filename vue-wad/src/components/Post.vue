@@ -66,8 +66,9 @@ export default {
 
 .post-header {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  margin: 0 0.5em 0 0.5em;
 }
 
 .post .post-content p  {
@@ -88,6 +89,7 @@ export default {
 .like-button {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
 }
 
 .social-media {
