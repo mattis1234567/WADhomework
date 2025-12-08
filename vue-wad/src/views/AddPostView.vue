@@ -2,9 +2,7 @@
     <Header></Header>
     <main>
         <form @submit.prevent="goHome">
-            <textarea name="" id="fpostbody" required placeholder="What do you want to write about?"></textarea> <br>
-            <label for="fselectedfile" class="file-link">Attach an image</label>
-            <input type="file" name="fselectedfile" id="fselectedfile" accept="image/png, image/jpeg" class="file-input"><br>
+            <textarea required placeholder="What do you want to write about?" v-model="post.body"></textarea> <br>
             <input type="submit" value="Create post" id="fsubmit">
         </form>
     </main>
@@ -14,16 +12,43 @@
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 
+import { isAuthenticated } from '@/auth';
+
 export default {
     name: 'AddPostView',
     components: {
         Header,
         Footer
     },
+	data() {
+		return {
+			post: {
+				body: "",
+				creation_time: ""
+			}
+		}
+	},
 	methods: {
 		goHome() {
-			this.$router.push('/');
+			this.post.creation_time = new Date().toISOString().split('T')[0];
+			fetch("http://localhost:3000/api/posts/", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(this.post)
+            }).then(response => {
+                if (!response.ok) {
+                    alert("Failed to add post!");
+                }
+                this.$router.replace({name: 'home'});
+            });
 		}
+	},
+	mounted() {
+		if (!isAuthenticated()) {
+            this.$router.push({name: 'Log in'});
+        }
 	}
 }
 </script>

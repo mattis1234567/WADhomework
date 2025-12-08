@@ -2,11 +2,10 @@
   <Header></Header>
   <main>
     <div id="posts" >
-      <Post v-for="post in posts" :key="post.postID" :post_id="post.postID" :post_datetime="post.creationTime" :post_body="post.body" :post_image_url="post.imageUrl" ></Post>
+      <Post v-for="post in posts" :key="post.id" :post="post" @click.prevent="gotoPostViewBtn(post.id)" ></Post>
     </div>
     <div>
-      <button @click="resetLikesBtn">Reset likes</button>
-      <button @click="randomizeLikesBtn">Randomize Likes</button>
+      <button @click="deleteAllPostsBtn">Delete all posts</button>
     </div>
   </main>
   <Footer></Footer>
@@ -17,6 +16,8 @@ import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import Post from '@/components/Post.vue';
 
+import { isAuthenticated } from '@/auth';
+
 export default {
   name: 'HomeView',
   components: {
@@ -24,18 +25,43 @@ export default {
     Footer,
     Post
   },
-  computed: {
-    posts() {
-      return this.$store.state.posts;
-    }
+  data() {
+    return {
+      posts: []
+    };
   },
   methods: {
-    resetLikesBtn: function() {
-      this.$store.dispatch('ResetLikesAct');
+    loadPosts: function() {
+      fetch("http://localhost:3000/api/posts").then(response => response.json()).then(json => {
+        this.posts = json;
+        this.posts.sort((a, b) => {
+            if (a.creation_time < b.creation_time) return -1;
+            if (a.creation_time > b.creation_time) return 1;
+
+            // If dates are equal, compare ids
+            return a.id - b.id;
+        });
+      });
     },
-    randomizeLikesBtn: function() {
-      this.$store.dispatch('RandomizeLikesAct');
+    deleteAllPostsBtn: function() {
+      fetch("http://localhost:3000/api/posts/", {
+          method: 'DELETE'
+      }).then(response => {
+          if (!response.ok) {
+              alert("Failed to add post!");
+          }
+          this.loadPosts();
+      });
+    },
+    gotoPostViewBtn: function(id) {
+      this.$router.push({name: 'PostView', params: {id}});
     }
+  },
+  mounted() {
+    if (!isAuthenticated()) {
+      this.$router.push({name: 'Log in'});
+    }
+    this.loadPosts();
   }
 }
 </script>

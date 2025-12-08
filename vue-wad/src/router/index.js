@@ -26,6 +26,11 @@ const routes = [
     path: '/ContactUs',
     name: 'Contact us',
     component: () => import('@/views/ContactUsView.vue')
+  },
+  {
+    path: '/post/:id',
+    name: 'PostView',
+    component: () => import('@/views/PostView.vue')
   }
 ]
 
