@@ -1,4 +1,5 @@
 const Pool = require('pg').Pool;
+
 const pool = new Pool({
     user: "postgres",
     password: "Legoauto2005",
@@ -7,27 +8,35 @@ const pool = new Pool({
     port: "5432"
 });
 
-async function execute(query) {
+const execute = async (query) => {
     try {
-        await pool.connect();
         await pool.query(query);
         return true;
-    } catch(err) {
-        console.error(err.stack);
+    } catch (error) {
+        console.error(error.stack);
         return false;
     }
-}
-//DROP TABLE IF EXISTS "posts";
-execute(` 
-    CREATE TABLE IF NOT EXISTS "posts" (
-	    "id" SERIAL PRIMARY KEY,
-	    "body" VARCHAR(200) NOT NULL,
-        "creation_time" VARCHAR(200) NOT NULL
-    );`
-).then(result => {
-    if (result) {
-        console.log("Recreated the table.");
-    }
-})
+};
+
+const createTables = async () => {
+    await execute(`
+        CREATE TABLE IF NOT EXISTS "users" (
+            id SERIAL PRIMARY KEY,
+            email VARCHAR(200) NOT NULL UNIQUE,
+            password VARCHAR(200) NOT NULL
+        );`
+    );
+
+    await execute(`
+        CREATE TABLE IF NOT EXISTS "posts" (
+            "id" SERIAL PRIMARY KEY,
+            "body" VARCHAR(200) NOT NULL,
+            "creation_time" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );`
+    );
+    console.log("Tables created/verified.");
+};
+
+createTables();
 
 module.exports = pool;

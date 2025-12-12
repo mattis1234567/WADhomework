@@ -13,9 +13,6 @@
             </div>
             <input type="password" id="fpass" placeholder="Password"> <br>
             <input type="submit" value="Sign up"> <br>
-            <div class="form-forgot-password">
-                <router-link to="/">Help with log in</router-link>
-            </div>
         </form>
     </main>
     <Footer></Footer>
@@ -44,7 +41,31 @@ export default {
                 return;
             }
             this.hidePopup();
-            this.$router.push('/');
+            this.SignUp();
+        },
+        SignUp() {
+            const email = document.getElementById('femail').value;
+            const password = document.getElementById('fpass').value;
+            const data = { email: email, password: password };
+
+            fetch("http://localhost:3000/auth/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+                credentials: 'include'
+            })
+            .then((response) => {
+                if (!response.ok) throw new Error("Signup failed");
+                return response.json();
+            })
+            .then((data) => {
+                console.log("Signed up:", data);
+                this.$router.push("/");
+            })
+            .catch((e) => {
+                console.log(e);
+                alert("Signup failed!");
+            });
         },
         hidePopup() {
             const popup = document.getElementById("myPopup");
@@ -128,10 +149,6 @@ form input[type="submit"]:hover {
 
 form a {
 	color: teal;
-}
-
-.form-forgot-password {
-	margin-top: 1em;
 }
 
 .popup {

@@ -10,27 +10,49 @@
 			<div class="dropdown-content" v-if="isOpen">
 				<a role="menuitem">John Doe</a>
 				<a role="menuitem">john.doe@ut.ee</a>
-				<a role="menuitem" @click="logOutBtn" class="button">Logout</a>
+				<a role="menuitem" v-if="authResult" @click="logOut" class="button">Logout</a>
 			</div>
 		</div>
 	</header>
 </template>
 <script>
-import { logOut } from '@/auth';
+import auth from '@/auth';
 
 export default {
     name: 'Header',
 	data: function() {
 		return {
-			isOpen: false
+			isOpen: false,
+			authResult: false
 		};
+	},
+	watch: {
+		'$route': async function() {
+			this.authResult = await auth.authenticated();
+		}
+	},
+	async mounted() {
+		this.authResult = await auth.authenticated();
+		document.addEventListener('click', this.handleClickOutside);
 	},
 	methods: {
 		toggleDropdown() {
 			this.isOpen = !this.isOpen;
 		},
-		logOutBtn() {
-			logOut();
+		logOut() {
+			fetch("http://localhost:3000/auth/logout", {
+				credentials: 'include',
+			})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+				this.authResult = false;
+				this.isOpen = false;
+				this.$router.push("/login");
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 		},
 		handleClickOutside(event) {
 			if (this.isOpen && this.$refs.dropdown && !this.$refs.dropdown.contains(event.target)) {
@@ -38,11 +60,7 @@ export default {
 			}
 		}
 	},
-	mounted() {
-		document.addEventListener('click', this.handleClickOutside);
-	},
 	beforeUnmount() {
-		// Remove listener to avoid memory leaks
 		document.removeEventListener('click', this.handleClickOutside);
 	}
 }

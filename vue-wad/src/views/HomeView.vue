@@ -16,8 +16,6 @@ import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import Post from '@/components/Post.vue';
 
-import { isAuthenticated } from '@/auth';
-
 export default {
   name: 'HomeView',
   components: {
@@ -32,23 +30,38 @@ export default {
   },
   methods: {
     loadPosts: function() {
-      fetch("http://localhost:3000/api/posts").then(response => response.json()).then(json => {
-        this.posts = json;
-        this.posts.sort((a, b) => {
-            if (a.creation_time < b.creation_time) return -1;
-            if (a.creation_time > b.creation_time) return 1;
-
-            // If dates are equal, compare ids
-            return a.id - b.id;
-        });
+      fetch("http://localhost:3000/api/posts", {
+      credentials: 'include'
+      })
+      .then(response => {
+        if (response.status === 401 || response.status === 403) {
+          this.$router.push("/login");
+          throw new Error("Unauthorized"); 
+        }
+        if (!response.ok) {
+          throw new Error("Server Error");
+        }
+        return response.json();
+      })
+      .then(json => {
+        if (Array.isArray(json)) {
+          this.posts = json;
+          this.posts.sort((a, b) => new Date(b.creation_time) - new Date(a.creation_time));
+        } else {
+          console.error("Expected an array of posts, but got:", json);
+        }
+      })
+      .catch(err => {
+        console.warn("Fetch error:", err.message); 
       });
     },
     deleteAllPostsBtn: function() {
       fetch("http://localhost:3000/api/posts/", {
-          method: 'DELETE'
+          method: 'DELETE',
+          credentials: 'include'
       }).then(response => {
           if (!response.ok) {
-              alert("Failed to add post!");
+              alert("Failed to delete posts!");
           }
           this.loadPosts();
       });
@@ -58,9 +71,6 @@ export default {
     }
   },
   mounted() {
-    if (!isAuthenticated()) {
-      this.$router.push({name: 'Log in'});
-    }
     this.loadPosts();
   }
 }

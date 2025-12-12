@@ -14,52 +14,46 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
-import { isAuthenticated } from '@/auth';
+import auth from '@/auth';
 
 export default {
     name: 'PostView',
-    components: {
-        Header,
-        Footer
-    },
+    components: { Header, Footer },
     data() {
-        return {
-            post: {}
-        };
+        return { post: {} };
     },
-    mounted() {
-        if (!isAuthenticated()) {
-            this.$router.push({name: 'Log in'});
+    async mounted() {
+        if (!(await auth.authenticated())) {
+            this.$router.push("/login");
+            return;
         }
         const id = this.$route.params.id;
-        fetch('http://localhost:3000/api/posts/' + id).then(response => response.json()).then(json => {
-            console.log(json);
-            this.post = json;
-        });
+        fetch('http://localhost:3000/api/posts/' + id, {
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(json => { this.post = json; })
+        .catch(err => console.log(err));
     },
     methods: {
         updatePostBtn: function() {
             fetch("http://localhost:3000/api/posts/" + this.post.id, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(this.post)
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ body: this.post.body })
             }).then(response => {
-                if (!response.ok) {
-                    alert("Failed to modify post!");
-                }
-                this.$router.replace({name: 'home'});
+                if (!response.ok) alert("Failed to update!");
+                else this.$router.replace("/");
             });
         },
         deletePostBtn: function() {
             fetch("http://localhost:3000/api/posts/" + this.post.id, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             }).then(response => {
-                if (!response.ok) {
-                    alert("Failed to delete post!");
-                }
-                this.$router.replace({name: 'home'});
+                if (!response.ok) alert("Failed to delete!");
+                else this.$router.replace("/");
             });
         }
     },

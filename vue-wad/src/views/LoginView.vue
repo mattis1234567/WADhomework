@@ -12,10 +12,7 @@
                 <span class="popuptext" style="white-space: pre-line">popup text</span>
             </div>
             <input type="password" id="fpass" placeholder="Password"> <br>
-            <input type="submit" value="Sign up"> <br>
-            <div class="form-forgot-password">
-                <router-link to="/">Help with log in</router-link>
-            </div>
+            <input type="submit" value="Log in"> <br>
         </form>
     </main>
     <Footer></Footer>
@@ -23,6 +20,8 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
+
+import auth from '@/auth'
 
 export default {
     name: 'LoginView',
@@ -44,7 +43,32 @@ export default {
                 return;
             }
             this.hidePopup();
-            this.$router.push('/');
+            this.LogIn()
+        },
+        LogIn() {
+            const email = document.getElementById('femail').value;
+            const password = document.getElementById('fpass').value;
+            
+            const data = { email: email, password: password };
+
+            fetch("http://localhost:3000/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+                credentials: 'include'
+            })
+            .then((response) => {
+                if (!response.ok) throw new Error("Login failed");
+                return response.json();
+            })
+            .then((data) => {
+                console.log("Logged in:", data);
+                this.$router.push("/");
+            })
+            .catch((e) => {
+                console.log(e);
+                alert("Login failed! Check credentials.");
+            });
         },
         hidePopup() {
             const popup = document.getElementById("myPopup");
@@ -82,7 +106,12 @@ export default {
 
             return errors;
         }
-    }
+    },
+	async mounted() {
+		if (await auth.authenticated()) {
+            this.$router.push("/");
+        }
+	}
 };
 </script>
 <style scoped>
@@ -128,10 +157,6 @@ form input[type="submit"]:hover {
 
 form a {
 	color: teal;
-}
-
-.form-forgot-password {
-	margin-top: 1em;
 }
 
 .popup {

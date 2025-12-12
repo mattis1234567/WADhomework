@@ -2,7 +2,7 @@
     <div class="post">
         <div class="post-header">
             <img class="post-logo" src="@/assets/me.png" alt="avatar">
-            <span class="post-date">{{ post.creation_time }}</span>
+            <span class="post-date">{{ formatDate(post.creation_time) }}</span>
         </div>
         <div class="post-content">
             <p>{{ post.body }}</p>
@@ -14,6 +14,16 @@ export default {
     name: 'Post',
     props: {
         post: Object
+    },
+    methods: {
+        formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
     }
 }
 </script>

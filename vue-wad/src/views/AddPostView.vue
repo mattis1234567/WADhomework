@@ -11,43 +11,35 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
-
-import { isAuthenticated } from '@/auth';
+import auth from '@/auth';
 
 export default {
     name: 'AddPostView',
-    components: {
-        Header,
-        Footer
-    },
+    components: { Header, Footer },
 	data() {
 		return {
-			post: {
-				body: "",
-				creation_time: ""
-			}
+			post: { body: "" }
 		}
 	},
 	methods: {
 		goHome() {
-			this.post.creation_time = new Date().toISOString().split('T')[0];
-			fetch("http://localhost:3000/api/posts/", {
+			fetch("http://localhost:3000/api/posts", {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify(this.post)
             }).then(response => {
                 if (!response.ok) {
                     alert("Failed to add post!");
+                } else {
+                    this.$router.replace("/");
                 }
-                this.$router.replace({name: 'home'});
             });
 		}
 	},
-	mounted() {
-		if (!isAuthenticated()) {
-            this.$router.push({name: 'Log in'});
+	async mounted() {
+		if (!(await auth.authenticated())) {
+            this.$router.push("/login");
         }
 	}
 }
