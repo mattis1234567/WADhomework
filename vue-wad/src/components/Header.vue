@@ -7,7 +7,7 @@
 		</nav>
 		<div class="dropdown" :class="{open: isOpen}" ref="dropdown">
 			<img src="@/assets/me.png" width="55px" height="55px" alt="Open menu" @click="toggleDropdown">
-			<div class="dropdown-content" v-if="isOpen && authResult">
+			<div class="dropdown-content" v-if="isOpen && authenticated">
 				<a role="menuitem">{{ username }}</a>
 				<a role="menuitem">{{ email }}</a>
 				<a role="menuitem"  @click="logOut" class="button">Logout</a>
@@ -23,20 +23,20 @@ export default {
 	data: function() {
 		return {
 			isOpen: false,
-			authResult: false,
+			authenticated: false,
 			email: "john.doe@ut.ee"
 		};
 	},
 	watch: {
 		'$route': async function() {
 			const authData = await auth.authenticated();
-			this.authResult = authData.authenticated;
+			this.authenticated = authData.authenticated;
 			this.email = authData.email;
 		}
 	},
 	async mounted() {
 		const authData = await auth.authenticated();
-		this.authResult = authData.authenticated;
+		this.authenticated = authData.authenticated;
 		this.email = authData.email;
 		document.addEventListener('click', this.handleClickOutside);
 	},
@@ -52,7 +52,11 @@ export default {
 	},
 	methods: {
 		toggleDropdown() {
-			this.isOpen = !this.isOpen;
+			if (!this.authenticated) {
+				this.$router.push("/login");
+			} else {
+				this.isOpen = !this.isOpen;
+			}
 		},
 		logOut() {
 			fetch("http://localhost:3000/auth/logout", {
@@ -61,7 +65,7 @@ export default {
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data);
-				this.authResult = false;
+				this.authenticated = false;
 				this.isOpen = false;
 				this.$router.push("/login");
 			})
