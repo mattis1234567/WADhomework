@@ -31,7 +31,7 @@ export default {
   methods: {
     loadPosts: function() {
       fetch("http://localhost:3000/api/posts", {
-      credentials: 'include'
+        credentials: 'include'
       })
       .then(response => {
         if (response.status === 401 || response.status === 403) {

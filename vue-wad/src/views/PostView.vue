@@ -23,15 +23,20 @@ export default {
         return { post: {} };
     },
     async mounted() {
-        if (!(await auth.authenticated())) {
-            this.$router.push("/login");
-            return;
-        }
         const id = this.$route.params.id;
         fetch('http://localhost:3000/api/posts/' + id, {
             credentials: 'include'
         })
-        .then(response => response.json())
+        .then(response => {
+            if (response.status === 401 || response.status === 403) {
+            this.$router.push("/login");
+            throw new Error("Unauthorized"); 
+            }
+            if (!response.ok) {
+            throw new Error("Server Error");
+            }
+            return response.json();
+        })
         .then(json => { this.post = json; })
         .catch(err => console.log(err));
     },

@@ -7,11 +7,11 @@
                 <router-link to="/login">Log in</router-link>
                 <p>or<br>Please sign up</p>
             </div>
-            <input type="email" name="email" id="femail" placeholder="Email" required> <br>
+            <input type="email" placeholder="Email" required v-model="email"> <br>
             <div class="popup" id="myPopup" @click="hidePopup">
                 <span class="popuptext" style="white-space: pre-line">popup text</span>
             </div>
-            <input type="password" id="fpass" placeholder="Password"> <br>
+            <input type="password" placeholder="Password" v-model="password"> <br>
             <input type="submit" value="Sign up"> <br>
         </form>
     </main>
@@ -27,10 +27,15 @@ export default {
         Header,
         Footer
     },
+    data: function() {
+        return {
+            email: "",
+            password: ""
+        };
+    },
     methods: {
         checkPasswordgoHome() {
-            const password = document.getElementById('fpass').value;
-            const errors = this.PasswordProblems(password);
+            const errors = this.PasswordProblems(this.password);
 
             if (errors.length > 0) {
                 const popup = document.getElementById("myPopup");
@@ -44,23 +49,24 @@ export default {
             this.SignUp();
         },
         SignUp() {
-            const email = document.getElementById('femail').value;
-            const password = document.getElementById('fpass').value;
-            const data = { email: email, password: password };
-
             fetch("http://localhost:3000/auth/signup", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data),
+                body: JSON.stringify({ email: this.email, password: this.password }),
                 credentials: 'include'
             })
-            .then((response) => {
-                if (!response.ok) throw new Error("Signup failed");
-                return response.json();
-            })
-            .then((data) => {
-                console.log("Signed up:", data);
-                this.$router.push("/");
+            .then(async(response) => {
+                if (response.status == 409) {
+                    const msg = await response.json();
+                    alert(msg.error);
+                    this.email = "";
+                    this.password = "";
+                }
+                else if (!response.ok) {
+                    throw new Error("Signup failed");
+                } else {
+                    this.$router.push("/");
+                }
             })
             .catch((e) => {
                 console.log(e);

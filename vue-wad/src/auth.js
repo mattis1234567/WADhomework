@@ -5,7 +5,7 @@ export default {
                 credentials: 'include' 
             });
             const data = await response.json();
-            return data.authenticated;
+            return data;
         } catch (e) {
             console.error(e);
             return false;

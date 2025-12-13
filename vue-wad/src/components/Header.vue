@@ -7,10 +7,10 @@
 		</nav>
 		<div class="dropdown" :class="{open: isOpen}" ref="dropdown">
 			<img src="@/assets/me.png" width="55px" height="55px" alt="Open menu" @click="toggleDropdown">
-			<div class="dropdown-content" v-if="isOpen">
-				<a role="menuitem">John Doe</a>
-				<a role="menuitem">john.doe@ut.ee</a>
-				<a role="menuitem" v-if="authResult" @click="logOut" class="button">Logout</a>
+			<div class="dropdown-content" v-if="isOpen && authResult">
+				<a role="menuitem">{{ username }}</a>
+				<a role="menuitem">{{ email }}</a>
+				<a role="menuitem"  @click="logOut" class="button">Logout</a>
 			</div>
 		</div>
 	</header>
@@ -23,17 +23,32 @@ export default {
 	data: function() {
 		return {
 			isOpen: false,
-			authResult: false
+			authResult: false,
+			email: "john.doe@ut.ee"
 		};
 	},
 	watch: {
 		'$route': async function() {
-			this.authResult = await auth.authenticated();
+			const authData = await auth.authenticated();
+			this.authResult = authData.authenticated;
+			this.email = authData.email;
 		}
 	},
 	async mounted() {
-		this.authResult = await auth.authenticated();
+		const authData = await auth.authenticated();
+		this.authResult = authData.authenticated;
+		this.email = authData.email;
 		document.addEventListener('click', this.handleClickOutside);
+	},
+	computed: {
+		username() {
+			const user = this.email.split('@')[0];
+			const parts = user.split('.');
+			const toTitleCase = (str) => {
+				return str[0].toUpperCase() + str.slice(1).toLowerCase();
+			};
+			return parts.map(s => toTitleCase(s)).join(' ');
+		}
 	},
 	methods: {
 		toggleDropdown() {

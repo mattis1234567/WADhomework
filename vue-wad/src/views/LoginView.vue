@@ -108,7 +108,8 @@ export default {
         }
     },
 	async mounted() {
-		if (await auth.authenticated()) {
+        const authData = await auth.authenticated();
+		if (authData.authenticated) {
             this.$router.push("/");
         }
 	}

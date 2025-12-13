@@ -35,7 +35,13 @@ app.post('/auth/signup', async (req, res) => {
         const { email, password } = req.body;
         const salt = await bcrypt.genSalt();
         const bcryptPassword = await bcrypt.hash(password, salt);
-        
+
+        const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+        if (user.rows.length !== 0) {
+            res.status(409).json({error: "User already exists"});
+            return;
+        }
+
         const newUser = await pool.query(
             "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *", 
             [email, bcryptPassword]
@@ -81,9 +87,11 @@ app.get('/auth/authenticate', async (req, res) => {
     const token = req.cookies.jwt;
     if (!token) return res.json({ authenticated: false });
 
-    jwt.verify(token, secret, (err) => {
+    jwt.verify(token, secret, async(err, decoded) => {
         if (err) return res.json({ authenticated: false });
-        res.json({ authenticated: true });
+        const userID = decoded.id;
+        const user = await pool.query("SELECT * FROM users WHERE id = $1", [userID]);
+        res.json({ authenticated: true, email: user.rows[0].email });
     });
 });
 
