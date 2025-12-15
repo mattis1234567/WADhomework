@@ -14,7 +14,6 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
-import auth from '@/auth';
 
 export default {
     name: 'PostView',
@@ -29,11 +28,11 @@ export default {
         })
         .then(response => {
             if (response.status === 401 || response.status === 403) {
-            this.$router.push("/login");
-            throw new Error("Unauthorized"); 
+                this.$router.push("/login");
+                throw new Error("Unauthorized"); 
             }
             if (!response.ok) {
-            throw new Error("Server Error");
+                throw new Error("Server Error");
             }
             return response.json();
         })

@@ -11,6 +11,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
+import auth from '@/auth';
 
 export default {
     name: 'AddPostView',
@@ -31,7 +32,7 @@ export default {
 			.then(response => {
 				if (response.status === 401 || response.status === 403) {
 					this.$router.push("/login");
-					throw new Error("Unauthorized"); 
+					return;
 				}
 				if (!response.ok) {
 					alert("Failed to add post!");
@@ -39,6 +40,13 @@ export default {
 					this.$router.replace("/");
 				}
 			});
+		}
+	},
+	async mounted() {
+		let authData = await auth.authenticated();
+		if (!authData.authenticated) {
+			this.$router.push("/login");
+			return;
 		}
 	}
 }
